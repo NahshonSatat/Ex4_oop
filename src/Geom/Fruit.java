@@ -1,4 +1,4 @@
-package ex4_example;
+package Geom;
 
 import Geom.Point3D;
 
@@ -19,6 +19,9 @@ public class Fruit {
 		this.point=new Point3D(x,y,z);
 		this.id=id;
 		this.Weight=Weight;
+	}
+	public Point3D getPoint() {
+		return this.point;
 	}
 	public String toString() {
 		return id+","+point.x()+","+point.y()+","+point.z()+","+Weight;

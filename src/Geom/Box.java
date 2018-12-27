@@ -1,4 +1,4 @@
-package ex4_example;
+package Geom;
 
 import Geom.Point3D;
 

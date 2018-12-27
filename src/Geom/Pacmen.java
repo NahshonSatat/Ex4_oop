@@ -1,4 +1,4 @@
-package ex4_example;
+package Geom;
 
 import Geom.Point3D;
 
@@ -23,6 +23,9 @@ public class Pacmen {
 		this.speed=speed;
 		this.Radius=radius;
 		this.time=0;
+	}
+	public Point3D getPoint() {
+		return this.point;
 	}
 	public String toString() {
 		return id+","+point.x()+","+point.y()+","+point.z()+","+speed+","+Radius;

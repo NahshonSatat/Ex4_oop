@@ -1,4 +1,4 @@
-package ex4_example;
+package Geom;
 
 import Geom.Point3D;
 
@@ -26,6 +26,10 @@ public class Ghost {
 		}
 		public String toString() {
 			return id+","+point.x()+","+point.y()+","+point.z()+","+speed+","+Radius;
+		}
+		public Point3D getPoint() {
+			// TODO Auto-generated method stub
+			return this.point;
 		}
 
 }
