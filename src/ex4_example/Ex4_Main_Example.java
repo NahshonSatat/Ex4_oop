@@ -28,7 +28,7 @@ public class Ex4_Main_Example {
 		// 2) Set your ID's - of all the group members
 		play1.setIDs(1111,2222,3333);
 		
-		// 3)Get the GPS coordinates of the "arena"
+		// 3)Get the GPS coordinates of the "area"
 		String map_data = play1.getBoundingBox();
 		System.out.println("Bounding Box info: "+map_data);
 		
