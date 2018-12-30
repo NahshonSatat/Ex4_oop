@@ -24,7 +24,12 @@ public class Box {
 		this.id=id;
 		this.Weight=Weight;
 	}
-	
+	public Point3D getStart() {
+		return start;
+	}
+	public Point3D getEnd() {
+		return end;
+	}
 		public String toString() {
 			return id+","+start.x()+","+start.y()+","+start.z()+","+end.x()+","+end.y()+","+end.z()+","+Weight;
 		}

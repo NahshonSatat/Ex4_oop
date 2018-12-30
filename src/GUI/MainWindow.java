@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 
 
 import Coords4.convert;
+import Geom.Box;
 import Geom.Fruit;
 import Geom.Game;
 import Geom.Ghost;
@@ -143,7 +144,7 @@ public class MainWindow extends JFrame implements MouseListener
 											e.printStackTrace();
 										}
 									}
-									System.out.println(play1.getBoundingBox());
+									//System.out.println(play1.getBoundingBox());
 									repaint();
 								}
 			}
@@ -219,20 +220,23 @@ public class MainWindow extends JFrame implements MouseListener
 		
 		g.drawImage(myImage, 0, 0,this.getWidth(),this.getHeight(), this);
 		
-		m1.setFrame(this.getWidth(), this.getHeight());
+		//m1.setFrame(this.getWidth(), this.getHeight());
+		m2.setFrame(this.getWidth(), this.getHeight());
+		 g.fillRect(230,80,10,10);
 		ArrayList<Pacmen>p=game.getPackmans();
 		ArrayList<Fruit>f=game.getFruits();
 		ArrayList<Player>pl=game.getPlayers();
 		ArrayList<Ghost>gh=game.getGhosts();
 		ArrayList<Geom.Box> b =game.getBoxes();
 		Point3D temp_point;
+		Point3D temp_point2;
 
 		// print the player
 		if(!pl.isEmpty()) {
 		Player p1=pl.get(0);
 		
-		temp_point=m1.PointGps2Pix(p1.getPoint());
-		//temp_point=m2.PointGps2Pix(p1.getPoint());
+		//temp_point=m1.PointGps2Pix(p1.getPoint());
+		temp_point=m2.PointGps2Pix(p1.getPoint());
 		g.setColor(Color.BLACK);
 		g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 		}
@@ -243,8 +247,8 @@ public class MainWindow extends JFrame implements MouseListener
 		while(it1.hasNext()) {
 			temp_Packman=(Pacmen)it1.next();
 			//temp_point=m1.PointGps2Pix(temp_Packman);
-			temp_point=m1.PointGps2Pix(temp_Packman.getPoint());
-			//temp_point=m2.PointGps2Pix(temp_Packman.getPoint());
+			//temp_point=m1.PointGps2Pix(temp_Packman.getPoint());
+			temp_point=m2.PointGps2Pix(temp_Packman.getPoint());
                   // System.out.println("print pacmen");
 					g.setColor(Color.YELLOW);
 					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
@@ -256,8 +260,8 @@ public class MainWindow extends JFrame implements MouseListener
 		while(it2.hasNext()) {
 			temp_Fruit=(Fruit)it2.next();
 			//temp_point=m1.PointGps2Pix(temp_Packman);
-			temp_point=m1.PointGps2Pix(temp_Fruit.getPoint());
-			//temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+			//temp_point=m1.PointGps2Pix(temp_Fruit.getPoint());
+			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
                  //  System.out.println("print fruit");
 					g.setColor(Color.GREEN);
 					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 10, 10);
@@ -274,6 +278,31 @@ public class MainWindow extends JFrame implements MouseListener
                  //  System.out.println("print ghost");
 					g.setColor(Color.RED);
 					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
+
+			}
+		// print the boxes
+		Iterator<Box> it4 =b.iterator();
+		Box temp_Box ;
+		while(it4.hasNext()) {
+			temp_Box=(Box)it4.next();
+			//temp_point=m1.PointGps2Pix(temp_Packman);
+			temp_point=m2.PointGps2Pix(temp_Box.getStart());
+			temp_point2=m2.PointGps2Pix(temp_Box.getEnd());
+			//temp_point=m2.PointGps2Pix(temp_Box.getPoint());
+                 //  System.out.println("print ghost");
+		    //g.drawRect(230,80,10,10); 
+			System.out.println("start"+temp_point);
+			System.out.println("end"+temp_point2);
+			System.out.println(temp_point.ix()-temp_point2.ix());
+			System.out.println();
+			
+			System.out.println("box");
+		    g.setColor(Color.WHITE); 
+			g.fillRect(temp_point.ix(),temp_point.iy(),temp_point2.ix()-temp_point.ix(),temp_point.iy()-temp_point2.iy());
+			//g.fillRect(temp_point.ix(),temp_point.iy(),30,30);
+			//g.fillRect(230,80,10,10); 
+				//	g.setColor(Color.RED);
+				///	g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 
 			}
 
