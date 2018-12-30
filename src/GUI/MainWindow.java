@@ -231,8 +231,8 @@ public class MainWindow extends JFrame implements MouseListener
 		if(!pl.isEmpty()) {
 		Player p1=pl.get(0);
 		
-		//temp_point=m1.PointGps2Pix(p1.getPoint());
-		temp_point=m2.PointGps2Pix(p1.getPoint());
+		temp_point=m1.PointGps2Pix(p1.getPoint());
+		//temp_point=m2.PointGps2Pix(p1.getPoint());
 		g.setColor(Color.BLACK);
 		g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 		}
@@ -243,8 +243,8 @@ public class MainWindow extends JFrame implements MouseListener
 		while(it1.hasNext()) {
 			temp_Packman=(Pacmen)it1.next();
 			//temp_point=m1.PointGps2Pix(temp_Packman);
-			//temp_point=m1.PointGps2Pix(temp_Packman.getPoint());
-			temp_point=m2.PointGps2Pix(temp_Packman.getPoint());
+			temp_point=m1.PointGps2Pix(temp_Packman.getPoint());
+			//temp_point=m2.PointGps2Pix(temp_Packman.getPoint());
                   // System.out.println("print pacmen");
 					g.setColor(Color.YELLOW);
 					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
@@ -256,8 +256,8 @@ public class MainWindow extends JFrame implements MouseListener
 		while(it2.hasNext()) {
 			temp_Fruit=(Fruit)it2.next();
 			//temp_point=m1.PointGps2Pix(temp_Packman);
-			//temp_point=m1.PointGps2Pix(temp_Fruit.getPoint());
-			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+			temp_point=m1.PointGps2Pix(temp_Fruit.getPoint());
+			//temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
                  //  System.out.println("print fruit");
 					g.setColor(Color.GREEN);
 					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 10, 10);
@@ -286,12 +286,14 @@ public class MainWindow extends JFrame implements MouseListener
 		Point3D current_palyer;
 			x = arg.getX();
 			y = arg.getY();
-			//Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
-			Point3D p1=m2.PointPix2Gps(new Point3D(x,y,0));
+			Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
+			//Point3D p1=m2.PointPix2Gps(new Point3D(x,y,0));
+			System.out.println(p1);
 		//	System.out.println(p1);
 			if(!game.getPlayers().isEmpty()) {
-			 current_palyer=game.getPlayers().get(0).getPoint();
-			rot= current_palyer.north_angle(p1);
+			 //current_palyer=game.getPlayers().get(0).getPoint();
+			//rot= (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360;
+			rot=360-( (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
 			}
 			System.out.println(rot);
 
@@ -330,29 +332,19 @@ public class MainWindow extends JFrame implements MouseListener
 		public void run() 
 		{
 			
+			// chang to isRunning
 				while(!game.getFruits().isEmpty()) {
-					
-					//System.out.println(play1.getBoard());
 				    play1.rotate(rot);
-				    //System.out.println("rotTE");
-				    //System.out.println(play1.getBoard());
 					game.upDate(play1.getBoard());
-					//ArrayList<String> board_data = play1.getBoard();
-					//for(int i=0;i<board_data.size();i++) {
-						//System.out.println(board_data.get(i));
-					//}
-					//System.out.println("fruts"+game.getFruits().size());
-					//System.out.println("pac"+game.getPackmans().size());
-					//System.out.println("ghost"+game.getGhosts().size());
-
 					repaint();
 						try {
-							Thread.sleep(30);
+							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 						
 					}
+				System.out.println(play1.getStatistics());
 
 				
 			
