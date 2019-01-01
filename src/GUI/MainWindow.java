@@ -68,7 +68,7 @@ public class MainWindow extends JFrame implements MouseListener
 		//gameP=new Game();
 		//file_name=s;
 		//play1 = new Play(file_name);
-		
+
 		//play1.setInitLocation(32.10486058280427,35.20937630059002);
 		game=new Game();
 		//game.upDate(play1.getBoard());
@@ -87,7 +87,7 @@ public class MainWindow extends JFrame implements MouseListener
 		// my coordinete
 		m1=new convert(1433,642,35.202306,32.105730,35.212407,32.101867);
 		//boaz coords
-		 m2=new convert(1433,642,35.202369,32.105728,35.212416,32.101898);
+		m2=new convert(1433,642,35.202369,32.105728,35.212416,32.101898);
 
 	}
 
@@ -120,33 +120,33 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// according to https://stackoverflow.com/questions/18774652/how-to-use-jfilechooser-to-find-a-file-location
-				
-								JFileChooser fc = new JFileChooser();
-				
-								int returnVal = fc.showOpenDialog(null);
-								fc.showOpenDialog(null);
-								if (returnVal == JFileChooser.APPROVE_OPTION) {
-									File file = fc.getSelectedFile();
-									if(!file.getAbsolutePath().contains(".csv")) {
-										System.out.println("this is not csv file!!!");
-									}
-									else {
-										System.out.println("Opening: " + file.getAbsolutePath());
-										
-										try {
-											play1 = new Play(file.getAbsolutePath());
-											
-											play1.setInitLocation(32.10486058280427,35.20937630059002);
-											
-											game.upDate(play1.getBoard());
-											play1.start();
-										} catch (Exception e) {
-											e.printStackTrace();
-										}
-									}
-									//System.out.println(play1.getBoundingBox());
-									repaint();
-								}
+
+				JFileChooser fc = new JFileChooser();
+
+				int returnVal = fc.showOpenDialog(null);
+				fc.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					if(!file.getAbsolutePath().contains(".csv")) {
+						System.out.println("this is not csv file!!!");
+					}
+					else {
+						System.out.println("Opening: " + file.getAbsolutePath());
+
+						try {
+							play1 = new Play(file.getAbsolutePath());
+
+							play1.setInitLocation(32.10486058280427,35.20937630059002);
+
+							game.upDate(play1.getBoard());
+							play1.start();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					System.out.println("num of boxes"+game.getBoxes().size());
+					repaint();
+				}
 			}
 		});
 
@@ -174,19 +174,19 @@ public class MainWindow extends JFrame implements MouseListener
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-								PlayThread t1 = new PlayThread();
-								t1.start();
+				PlayThread t1 = new PlayThread();
+				t1.start();
 
 			}});
-		
-		
-		
+
+
+
 		// the "tokml" action
 		item6.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 
 			}});
 
@@ -203,7 +203,7 @@ public class MainWindow extends JFrame implements MouseListener
 
 		try {
 			//myImage = ImageIO.read(new File(map.getPath()));
-			 myImage = ImageIO.read(new File("Ariel1.png"));
+			myImage = ImageIO.read(new File("Ariel1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -217,30 +217,31 @@ public class MainWindow extends JFrame implements MouseListener
 
 	public void paint(Graphics g)
 	{
-		
+
 		g.drawImage(myImage, 0, 0,this.getWidth(),this.getHeight(), this);
-		
+
 		//m1.setFrame(this.getWidth(), this.getHeight());
 		m2.setFrame(this.getWidth(), this.getHeight());
-		 g.fillRect(230,80,10,10);
+		// g.fillRect(230,80,10,10);
 		ArrayList<Pacmen>p=game.getPackmans();
 		ArrayList<Fruit>f=game.getFruits();
 		ArrayList<Player>pl=game.getPlayers();
 		ArrayList<Ghost>gh=game.getGhosts();
 		ArrayList<Geom.Box> b =game.getBoxes();
 		Point3D temp_point;
+		Point3D temp_point1;
 		Point3D temp_point2;
 
 		// print the player
 		if(!pl.isEmpty()) {
-		Player p1=pl.get(0);
-		
-		//temp_point=m1.PointGps2Pix(p1.getPoint());
-		temp_point=m2.PointGps2Pix(p1.getPoint());
-		g.setColor(Color.BLACK);
-		g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
+			Player p1=pl.get(0);
+
+			//temp_point=m1.PointGps2Pix(p1.getPoint());
+			temp_point=m2.PointGps2Pix(p1.getPoint());
+			g.setColor(Color.BLACK);
+			g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 		}
-		
+
 		// print the Packmans
 		Iterator<Pacmen> it1 =p.iterator();
 		Pacmen temp_Packman ;
@@ -249,11 +250,11 @@ public class MainWindow extends JFrame implements MouseListener
 			//temp_point=m1.PointGps2Pix(temp_Packman);
 			//temp_point=m1.PointGps2Pix(temp_Packman.getPoint());
 			temp_point=m2.PointGps2Pix(temp_Packman.getPoint());
-                  // System.out.println("print pacmen");
-					g.setColor(Color.YELLOW);
-					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
+			// System.out.println("print pacmen");
+			g.setColor(Color.YELLOW);
+			g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 
-			}
+		}
 		// print the Fruit
 		Iterator<Fruit> it2 =f.iterator();
 		Fruit temp_Fruit ;
@@ -262,11 +263,11 @@ public class MainWindow extends JFrame implements MouseListener
 			//temp_point=m1.PointGps2Pix(temp_Packman);
 			//temp_point=m1.PointGps2Pix(temp_Fruit.getPoint());
 			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
-                 //  System.out.println("print fruit");
-					g.setColor(Color.GREEN);
-					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 10, 10);
+			//  System.out.println("print fruit");
+			g.setColor(Color.GREEN);
+			g.fillOval((int)temp_point.x(), (int)temp_point.y(), 10, 10);
 
-			}
+		}
 		// print the ghost
 		Iterator<Ghost> it3 =gh.iterator();
 		Ghost temp_Ghost ;
@@ -275,58 +276,44 @@ public class MainWindow extends JFrame implements MouseListener
 			//temp_point=m1.PointGps2Pix(temp_Packman);
 			//temp_point=m1.PointGps2Pix(temp_Ghost.getPoint());
 			temp_point=m2.PointGps2Pix(temp_Ghost.getPoint());
-                 //  System.out.println("print ghost");
-					g.setColor(Color.RED);
-					g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
+			//  System.out.println("print ghost");
+			g.setColor(Color.RED);
+			g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
 
-			}
+		}
 		// print the boxes
 		Iterator<Box> it4 =b.iterator();
 		Box temp_Box ;
 		while(it4.hasNext()) {
 			temp_Box=(Box)it4.next();
-			//temp_point=m1.PointGps2Pix(temp_Packman);
-			temp_point=m2.PointGps2Pix(temp_Box.getStart());
-			temp_point2=m2.PointGps2Pix(temp_Box.getEnd());
-			//temp_point=m2.PointGps2Pix(temp_Box.getPoint());
-                 //  System.out.println("print ghost");
-		    //g.drawRect(230,80,10,10); 
-			System.out.println("start"+temp_point);
-			System.out.println("end"+temp_point2);
-			System.out.println(temp_point.ix()-temp_point2.ix());
-			System.out.println();
-			
-			System.out.println("box");
-		    g.setColor(Color.WHITE); 
-			g.fillRect(temp_point.ix(),temp_point.iy(),temp_point2.ix()-temp_point.ix(),temp_point.iy()-temp_point2.iy());
-			//g.fillRect(temp_point.ix(),temp_point.iy(),30,30);
-			//g.fillRect(230,80,10,10); 
-				//	g.setColor(Color.RED);
-				///	g.fillOval((int)temp_point.x(), (int)temp_point.y(), 20, 20);
+			temp_point2=m2.PointGps2Pix(temp_Box.getStart());
+			temp_point1=m2.PointGps2Pix(temp_Box.getEnd());
+			g.setColor(Color.BLUE); 
+			g.fillRect(temp_point1.ix()-(temp_point1.ix()-temp_point2.ix()),temp_point1.iy(),(temp_point1.ix()-temp_point2.ix()),(temp_point2.iy()-temp_point1.iy()));
 
-			}
+
+		}
 
 	}
-
 
 
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		Point3D current_palyer;
-			x = arg.getX();
-			y = arg.getY();
-			Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
-			//Point3D p1=m2.PointPix2Gps(new Point3D(x,y,0));
-			System.out.println(p1);
+		x = arg.getX();
+		y = arg.getY();
+		Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
+		//Point3D p1=m2.PointPix2Gps(new Point3D(x,y,0));
+		System.out.println(p1);
 		//	System.out.println(p1);
-			if(!game.getPlayers().isEmpty()) {
-			 //current_palyer=game.getPlayers().get(0).getPoint();
+		if(!game.getPlayers().isEmpty()) {
+			//current_palyer=game.getPlayers().get(0).getPoint();
 			//rot= (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360;
 			rot=360-( (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
-			}
-			System.out.println(rot);
+		}
+		System.out.println(rot);
 
-		
+
 	}
 
 
@@ -360,27 +347,27 @@ public class MainWindow extends JFrame implements MouseListener
 		@Override
 		public void run() 
 		{
-			
-			// chang to isRunning
-				while(!game.getFruits().isEmpty()) {
-				    play1.rotate(rot);
-					game.upDate(play1.getBoard());
-					repaint();
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						
-					}
-				System.out.println(play1.getStatistics());
 
-				
-			
+			// chang to isRunning
+			while(!game.getFruits().isEmpty()) {
+				play1.rotate(rot);
+				game.upDate(play1.getBoard());
+				repaint();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
 			}
+			System.out.println(play1.getStatistics());
+
+
 
 		}
 
 	}
+
+}
 
 
