@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/אליהו סתת/eclipse-workspace/Ex4_oop/mysql-connector-java-5.1.47.jar"/>
 	<classpathentry kind="lib" path="C:/Users/אליהו סתת/Desktop/Ex4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/אליהו סתת/eclipse-workspace/Ex4_oop/Graph_v0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

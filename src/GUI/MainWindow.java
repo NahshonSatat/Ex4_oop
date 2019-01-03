@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-
+import Algo.shortAlgo;
 import Coords4.convert;
 import Geom.Box;
 import Geom.Fruit;
@@ -166,6 +166,13 @@ public class MainWindow extends JFrame implements MouseListener
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				shortAlgo sa=new shortAlgo(game);
+				Point3D a1 = new Point3D(425,153);
+				Point3D c1 = new Point3D(450,538);
+				Point3D b1 = new Point3D(1094,509);
+				sa.chack(a1, c1);
+				
+				
 			}
 
 		});
@@ -186,7 +193,19 @@ public class MainWindow extends JFrame implements MouseListener
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
+				shortAlgo sa=new shortAlgo(game);
+				Point3D t=new Point3D(32.10386468847352,35.20379330704815,0.0);
+				Point3D temp_point1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+				Point3D temp_point2=m2.PointGps2Pix(t);
+				Point3D temp1 = new Point3D(678,202);
+				//Point3D temp1 = new Point3D(temp_point1.x(),temp_point1.y());
+				//Point3D temp2 = new Point3D(temp_point2.x(),temp_point2.y());
+				Point3D temp2 = new Point3D(1010,453);
+				sa.buildGraph(temp1,temp2);
+//				System.out.println("the num of points:");
+//				sa.box2arr();
+//				System.out.println("the num of lines:");
+//				sa.boxes2lines();
 
 			}});
 
@@ -289,9 +308,10 @@ public class MainWindow extends JFrame implements MouseListener
 			temp_point2=m2.PointGps2Pix(temp_Box.getStart());
 			temp_point1=m2.PointGps2Pix(temp_Box.getEnd());
 			g.setColor(Color.BLUE); 
-			g.fillRect(temp_point1.ix()-(temp_point1.ix()-temp_point2.ix()),temp_point1.iy(),(temp_point1.ix()-temp_point2.ix()),(temp_point2.iy()-temp_point1.iy()));
-
-
+			g.fillRect(temp_point1.ix()-(temp_point1.ix()-temp_point2.ix())+10,temp_point1.iy()+10,(temp_point1.ix()-temp_point2.ix()),(temp_point2.iy()-temp_point1.iy()));
+			g.setColor(Color.RED); 
+			//g.fillOval((int)temp_point1.x(), (int)temp_point1.y(), 10, 10);
+			//g.fillOval((int)temp_point2.x(), (int)temp_point2.y(), 10, 10);
 		}
 
 	}
@@ -304,14 +324,14 @@ public class MainWindow extends JFrame implements MouseListener
 		y = arg.getY();
 		Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
 		//Point3D p1=m2.PointPix2Gps(new Point3D(x,y,0));
-		System.out.println(p1);
+		System.out.println(arg.getX()+","+arg.getY());
 		//	System.out.println(p1);
 		if(!game.getPlayers().isEmpty()) {
 			//current_palyer=game.getPlayers().get(0).getPoint();
 			//rot= (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360;
 			rot=360-( (game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
 		}
-		System.out.println(rot);
+		//System.out.println(rot);
 
 
 	}

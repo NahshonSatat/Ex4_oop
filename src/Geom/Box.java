@@ -19,8 +19,8 @@ public class Box {
 		double z1= Double.parseDouble(arr[7]);
 		double id=Double.parseDouble(arr[1]);
 		double Weight=Double.parseDouble(arr[8]);
-		this.start=new Point3D(x,y,z);
-		this.end=new Point3D(x1,y1,z1);
+		this.start=new Point3D(x-0.000001,y-0.000001,z);
+		this.end=new Point3D(x1+0.000001,y1+0.000001,z1);
 		this.id=id;
 		this.Weight=Weight;
 	}
