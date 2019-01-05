@@ -13,6 +13,7 @@ import graph.Node;
 import graph.Point3D;
 import Coords4.convert;
 import Geom.Box;
+import Geom.Fruit;
 import Geom.Game;
 import Geom.Ghost;
 import Geom.Pacmen;
@@ -30,10 +31,10 @@ public class shortAlgo {
 
 	private Game game;
 	private convert m2;
-	//private Point3D[] points;
+    public int count=0;
+	
 	public shortAlgo(Game game) {
 		this.game=game;
-		//points=box2arr();
 		m2=new convert(1433,642,35.202369,32.105728,35.212416,32.101898);
 	}
 
@@ -109,13 +110,16 @@ public class shortAlgo {
 			Line2D line3 = new Line2D.Double(temp4.x(),temp4.y(),temp2.x(),temp2.y());
 			//System.out.println("line3:"+temp4.x()+","+temp4.y()+","+temp2.x()+","+temp2.y());
 			Line2D line4 = new Line2D.Double(temp4.x(),temp4.y(),temp3.x(),temp3.y());
+			
+			Line2D line5 = new Line2D.Double(temp1.x(),temp1.y(),temp4.x(),temp4.y());
+			//System.out.println("line3:"+temp4.x()+","+temp4.y()+","+temp2.x()+","+temp2.y());
+			Line2D line6 = new Line2D.Double(temp2.x(),temp2.y(),temp3.x(),temp3.y());
 			lines.add(line1);
-
 			lines.add(line2);
-
 			lines.add(line3);
-
 			lines.add(line4);
+			lines.add(line5);
+			lines.add(line6);
 
 
 		}
@@ -243,5 +247,201 @@ public class shortAlgo {
 		return G;
 	}
 	
+	
+	
+	
+	public double disTime(Geom.Point3D a1,Geom.Point3D b1) {
+		Point3D[] points=box2arr();
 
+		ArrayList<Line2D> lines=boxes2lines();
+		syse(lines);
+		System.out.println(lines.size());
+		Point3D a=new Point3D(a1.x(),a1.y());
+		Point3D b=new Point3D(b1.x(),b1.y());
+		Graph G = new Graph();
+		String source = "a";
+		String target = "b";
+		G.add(new Node(source)); // Node "a" (0)
+		for(int i=0;i<points.length;i++) {
+			Node d = new Node(""+i);
+			//System.out.println("the point"+i+": "+points[i]);
+
+			G.add(d);
+		}
+		G.add(new Node(target));
+
+		String temp="";
+		String temp1="";
+		// addnig all the edge of a
+		//System.out.println(a);
+		for (int i = 0; i < points.length; i++) {
+			if(hasLine(a,points[i])) {
+				temp=""+i;
+				//System.out.println("adding edge a");
+				G.addEdge("a",temp,a.distance2D(points[i]));
+			}
+		}
+		if(hasLine(a,b)) {
+			//System.out.println("adding edge a-b");
+			G.addEdge("a","b",a.distance2D(b));
+		}
+
+		// addnig all the edge of b
+		for (int i = 0; i < points.length; i++) {
+			if(hasLine(b,points[i])) {
+				temp=""+i;
+				//System.out.println("adding edge b");
+				//System.out.println(points[i]);
+				G.addEdge("b",temp,b.distance2D(points[i]));
+			}
+		}
+
+
+		// adding all the edge of the graph
+		for (int i = 0; i < points.length; i++) {
+			for (int j = 0; j < points.length; j++) {
+				if((i!=j)&&(hasLine(points[i],points[j]))) {
+					temp=""+i;
+					temp1=""+j;
+					//System.out.println("adding edge c"+i+","+j);
+					//System.out.println(points[i]);
+					//System.out.println(points[j]);
+					G.addEdge(temp,temp1,points[i].distance2D(points[j]));
+				}
+			}
+		}
+		System.out.println("the "+count+"time");
+		count++;
+		Graph_Algo.dijkstra(G, source);
+		Node g = G.getNodeByName(target);
+		System.out.println("***** Graph try for OOP_Ex4 *****");
+		System.out.println(g);
+		System.out.println("Dist: "+g.getDist());
+		return g.getDist();
+	}
+	
+	
+	public Geom.Point3D nearFrut() {
+		double besttime=10000;
+		Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
+		Geom.Point3D temp_point;
+		Geom.Point3D start_point=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+		ArrayList<Fruit>f=game.getFruits();
+		Iterator<Fruit> it2 =f.iterator();
+		Fruit temp_Fruit ;
+		while(it2.hasNext()) {
+			temp_Fruit=(Fruit)it2.next();
+			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+           if(disTime(start_point,temp_point)<besttime) {
+        	   bestPoint=  temp_point;
+        	   besttime=disTime(start_point,temp_point);
+           }
+		}
+		return bestPoint;
+	}
+	
+	public Geom.Point3D nearFrut1() {
+		Geom.Point3D bestPoint=m2.PointGps2Pix(game.getFruits().get(1).getPoint());
+		//Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
+//		Geom.Point3D temp_point;
+//		Geom.Point3D start_point=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+//		ArrayList<Fruit>f=game.getFruits();
+//		Iterator<Fruit> it2 =f.iterator();
+//		Fruit temp_Fruit ;
+//		while(it2.hasNext()) {
+//			temp_Fruit=(Fruit)it2.next();
+//			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+//           if(disTime(start_point,temp_point)<besttime) {
+//        	   bestPoint=  temp_point;
+//        	   besttime=disTime(start_point,temp_point);
+//           }
+//		}
+		return bestPoint;
+	}
+	
+	public double rotet() {
+		///////////////////////////////////////////////////////
+		//Geom.Point3D b1= nearFrut();
+		Geom.Point3D b1=m2.PointGps2Pix(game.getFruits().get(0).getPoint());
+		Geom.Point3D a1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+		Point3D[] points=box2arr();
+
+		System.out.println(points.length);
+		ArrayList<Line2D> lines=boxes2lines();
+		syse(lines);
+		System.out.println(lines.size());
+		Point3D a=new Point3D(a1.x(),a1.y());
+		Point3D b=new Point3D(b1.x(),b1.y());
+		Graph G = new Graph();
+		String source = "a";
+		String target = "b";
+		G.add(new Node(source)); // Node "a" (0)
+		for(int i=0;i<points.length;i++) {
+			Node d = new Node(""+i);
+			System.out.println("the point"+i+": "+points[i]);
+
+			G.add(d);
+		}
+		G.add(new Node(target));
+
+		String temp="";
+		String temp1="";
+		// addnig all the edge of a
+		System.out.println(a);
+		for (int i = 0; i < points.length; i++) {
+			if(hasLine(a,points[i])) {
+				temp=""+i;
+				System.out.println("adding edge a");
+				G.addEdge("a",temp,a.distance2D(points[i]));
+			}
+		}
+		if(hasLine(a,b)) {
+			System.out.println("adding edge a-b");
+			G.addEdge("a","b",a.distance2D(b));
+		}
+
+		// addnig all the edge of b
+		for (int i = 0; i < points.length; i++) {
+			if(hasLine(b,points[i])) {
+				temp=""+i;
+				System.out.println("adding edge b");
+				System.out.println(points[i]);
+				G.addEdge("b",temp,b.distance2D(points[i]));
+			}
+		}
+
+
+		// adding all the edge of the graph
+		for (int i = 0; i < points.length; i++) {
+			for (int j = 0; j < points.length; j++) {
+				if((i!=j)&&(hasLine(points[i],points[j]))) {
+					temp=""+i;
+					temp1=""+j;
+					System.out.println("adding edge c"+i+","+j);
+					System.out.println(points[i]);
+					System.out.println(points[j]);
+					G.addEdge(temp,temp1,points[i].distance2D(points[j]));
+				}
+			}
+		}
+			Graph_Algo.dijkstra(G, source);
+			Node g = G.getNodeByName(target);
+			String s=g.toString();
+			System.out.println("the path"+g.getPath());
+			int index=0;
+			if(g.getPath().size()<2) {
+			index=0;	
+			}
+			else {
+			s=g.getPath().get(1);
+			 index=Integer.parseInt(s);
+			}
+			Geom.Point3D p1=m2.PointPix2Gps(new Geom.Point3D( points[index].x(),points[index].y()));
+			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
+			return rot;
+		
+	}
+
+
+	
 }

@@ -54,13 +54,15 @@ public class MainWindow extends JFrame implements MouseListener
 	private convert m1;
 	private convert m2;
 	private double rot;
-	Point3D current_palyer;
+	private Point3D current_palyer;
 	//private Image p1;
 	//private Image f1;
-	String file_name ;
-	Play play1 ;
-	Game game;
-
+	private String file_name ;
+	private Play play1 ;
+	private Game game;
+	private boolean play =true;
+	private boolean run =true;
+	private boolean init =true;
 	// the constructor 
 	public MainWindow() throws IOException 
 	{
@@ -135,16 +137,14 @@ public class MainWindow extends JFrame implements MouseListener
 
 						try {
 							play1 = new Play(file.getAbsolutePath());
-
-							play1.setInitLocation(32.10486058280427,35.20937630059002);
-
+	
 							game.upDate(play1.getBoard());
-							play1.start();
+
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
-					System.out.println("num of boxes"+game.getBoxes().size());
+					//System.out.println("num of boxes"+game.getBoxes().size());
 					repaint();
 				}
 			}
@@ -155,7 +155,23 @@ public class MainWindow extends JFrame implements MouseListener
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
+				Point3D p1;
+				if(!game.getPackmans().isEmpty()) {
+				 p1=game.getPackmans().get(0).getPoint();
+				}
+				else {
+					p1=game.getFruits().get(0).getPoint();
+				}
+				if(init) {
+				play1.setInitLocation(p1.x(),p1.y());
+				init=false;
+				}
+				play1.start();
+				game.upDate(play1.getBoard());
+				repaint();
+				
+				RunThread t1 = new RunThread();
+				t1.start();
 			}
 
 		});
@@ -181,6 +197,14 @@ public class MainWindow extends JFrame implements MouseListener
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+
+				//play1.setInitLocation(32.10486058280427,35.20937630059002);
+				Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
+				if(init) {
+				play1.setInitLocation(p1.x(),p1.y());
+				init=false;
+				}
+				play1.start();
 				PlayThread t1 = new PlayThread();
 				t1.start();
 
@@ -198,6 +222,7 @@ public class MainWindow extends JFrame implements MouseListener
 				Point3D temp_point1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
 				Point3D temp_point2=m2.PointGps2Pix(t);
 				Point3D temp1 = new Point3D(678,202);
+				//Point3D temp1 = new Point3D(0,0);
 				//Point3D temp1 = new Point3D(temp_point1.x(),temp_point1.y());
 				//Point3D temp2 = new Point3D(temp_point2.x(),temp_point2.y());
 				Point3D temp2 = new Point3D(1010,453);
@@ -381,6 +406,31 @@ public class MainWindow extends JFrame implements MouseListener
 
 			}
 			System.out.println(play1.getStatistics());
+
+
+
+		}
+
+	}
+	public class RunThread extends Thread{
+		@Override
+		public void run() 
+		{
+
+			// chang to isRunning
+			while(!game.getFruits().isEmpty()) {
+				shortAlgo sa=new shortAlgo(game);
+				play1.rotate(sa.rotet());
+				game.upDate(play1.getBoard());
+				repaint();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+			//System.out.println(play1.getStatistics());
 
 
 
