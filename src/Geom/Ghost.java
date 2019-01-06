@@ -1,6 +1,12 @@
 package Geom;
 
 import Geom.Point3D;
+/**
+ * this class reprisent a ghost
+ * with point and Weight and speed
+ * @author אליהו סתת
+ *
+ */
 
 public class Ghost {
 		private double Radius;
@@ -9,6 +15,10 @@ public class Ghost {
 		private Point3D point;
 		private double time;
 		
+		
+		/**
+		 * the class build from a line that given from play class
+		 */
 		public Ghost(String line) {
 			String[] arr=line.split(",");
 			// getting the lat lont alt for the point

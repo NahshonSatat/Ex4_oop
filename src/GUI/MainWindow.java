@@ -186,7 +186,7 @@ public class MainWindow extends JFrame implements MouseListener
 				Point3D a1 = new Point3D(425,153);
 				Point3D c1 = new Point3D(450,538);
 				Point3D b1 = new Point3D(1094,509);
-				sa.chack(a1, c1);
+				//sa.chack(a1, c1);
 				
 				
 			}
@@ -226,7 +226,7 @@ public class MainWindow extends JFrame implements MouseListener
 				//Point3D temp1 = new Point3D(temp_point1.x(),temp_point1.y());
 				//Point3D temp2 = new Point3D(temp_point2.x(),temp_point2.y());
 				Point3D temp2 = new Point3D(1010,453);
-				sa.buildGraph(temp1,temp2);
+				//sa.buildGraph(temp1,temp2);
 //				System.out.println("the num of points:");
 //				sa.box2arr();
 //				System.out.println("the num of lines:");
@@ -394,7 +394,8 @@ public class MainWindow extends JFrame implements MouseListener
 		{
 
 			// chang to isRunning
-			while(!game.getFruits().isEmpty()) {
+			//while(!game.getFruits().isEmpty()) {
+				while(play1.isRuning()) {
 				play1.rotate(rot);
 				game.upDate(play1.getBoard());
 				repaint();
@@ -418,9 +419,11 @@ public class MainWindow extends JFrame implements MouseListener
 		{
 
 			// chang to isRunning
-			while(!game.getFruits().isEmpty()) {
+			while(play1.isRuning()) {
+			//while(!game.getFruits().isEmpty()) {
 				shortAlgo sa=new shortAlgo(game);
 				play1.rotate(sa.rotet());
+				
 				game.upDate(play1.getBoard());
 				repaint();
 				try {

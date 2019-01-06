@@ -1,6 +1,7 @@
 package Algo;
 
 import java.awt.Color;
+
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ import Geom.Game;
 import Geom.Ghost;
 import Geom.Pacmen;
 
+/**
+ * this class knows to get game in some position and to give 
+ * the rotate that the player needs to go for get the nearts fruit
+ */
 
 public class shortAlgo {
 //	public static void main(String[] args) 
@@ -44,7 +49,6 @@ public class shortAlgo {
 
 
 	// convert the boxes of the game to array of points
-
 	//works
 	public Point3D[] box2arr() {
 		ArrayList<Point3D> p=new ArrayList<Point3D>();
@@ -76,7 +80,7 @@ public class shortAlgo {
 
 	}
 
-	// make the boxes to list of lines
+	// make the boxes to list of lines- every box tranform to six lines in the list
 	// works!!!
 	public ArrayList<Line2D> boxes2lines(){
 		ArrayList<Line2D> lines=new ArrayList<Line2D>();
@@ -128,7 +132,7 @@ public class shortAlgo {
 
 	}
 
-	//chack if two points has a strith line
+	//chack if two points has a straight line 
 	//source : https://stackoverflow.com/questions/16333650/how-to-check-whether-2-lines-segments-intersect
 	// works!!!
 	public boolean hasLine(Point3D source,Point3D target) {
@@ -159,6 +163,8 @@ public class shortAlgo {
 		}
 		return ans;	
 	}
+	
+	/*
 	public void chack(Geom.Point3D a1,Geom.Point3D b1) {
 		Point3D a=new Point3D(a1.x(),a1.y());
 		Point3D b=new Point3D(b1.x(),b1.y());
@@ -174,7 +180,9 @@ public class shortAlgo {
            System.out.println(temp_Line2D.getX1()+","+temp_Line2D.getY1()+","+temp_Line2D.getX2()+","+temp_Line2D.getY2());
 		}
 	}
-
+*/
+	
+	/*
 	public Graph buildGraph(Geom.Point3D a1,Geom.Point3D b1) {
 		Point3D[] points=box2arr();
 //		for (int i = 0; i < points.length; i++) {
@@ -239,6 +247,8 @@ public class shortAlgo {
 				}
 			}
 		}
+		//Graph_Algo ga1=new Graph_Algo();
+		
 		Graph_Algo.dijkstra(G, source);
 		Node g = G.getNodeByName(target);
 		System.out.println("***** Graph try for OOP_Ex4 *****");
@@ -247,14 +257,15 @@ public class shortAlgo {
 		return G;
 	}
 	
+	*/
 	
-	
-	
+	// this function get to points and give the best time to go from a1 to b1
+	// according to the given Graph
 	public double disTime(Geom.Point3D a1,Geom.Point3D b1) {
 		Point3D[] points=box2arr();
 
 		ArrayList<Line2D> lines=boxes2lines();
-		syse(lines);
+		//syse(lines);
 		System.out.println(lines.size());
 		Point3D a=new Point3D(a1.x(),a1.y());
 		Point3D b=new Point3D(b1.x(),b1.y());
@@ -312,7 +323,8 @@ public class shortAlgo {
 		}
 		System.out.println("the "+count+"time");
 		count++;
-		Graph_Algo.dijkstra(G, source);
+		Graph_Algo ga=new Graph_Algo();
+		ga.dijkstra(G, source);
 		Node g = G.getNodeByName(target);
 		System.out.println("***** Graph try for OOP_Ex4 *****");
 		System.out.println(g);
@@ -321,6 +333,7 @@ public class shortAlgo {
 	}
 	
 	
+	// chack what is the nearst fruit to go in a given game - use the "disTime" fun 
 	public Geom.Point3D nearFrut() {
 		double besttime=10000;
 		Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
@@ -359,6 +372,8 @@ public class shortAlgo {
 		return bestPoint;
 	}
 	
+	
+	// this is the main function - calc the best fruit to go and give the rotate for this fruit.
 	public double rotet() {
 		///////////////////////////////////////////////////////
 		//Geom.Point3D b1= nearFrut();
@@ -368,7 +383,7 @@ public class shortAlgo {
 
 		System.out.println(points.length);
 		ArrayList<Line2D> lines=boxes2lines();
-		syse(lines);
+		//syse(lines);
 		System.out.println(lines.size());
 		Point3D a=new Point3D(a1.x(),a1.y());
 		Point3D b=new Point3D(b1.x(),b1.y());
@@ -424,13 +439,16 @@ public class shortAlgo {
 				}
 			}
 		}
+		Graph_Algo ga=new Graph_Algo();
+		  //ga.dijkstra(G, source);
 			Graph_Algo.dijkstra(G, source);
 			Node g = G.getNodeByName(target);
 			String s=g.toString();
 			System.out.println("the path"+g.getPath());
 			int index=0;
 			if(g.getPath().size()<2) {
-			index=0;	
+				double rot=360-((game.getPlayers().get(0).getPoint().north_angle(togo())+270)%360);
+				return rot;
 			}
 			else {
 			s=g.getPath().get(1);
@@ -440,6 +458,25 @@ public class shortAlgo {
 			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
 			return rot;
 		
+	}
+	
+	
+	//if there is a fruit near to the packman without any box in the midle -> goto the nearst fruit
+	public Geom.Point3D togo(){
+		Point3D[] points=box2arr();
+		Geom.Point3D p1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+		Point3D player=new Point3D(p1.x(),p1.y());
+		int index=0;
+		double dis=player.distance2D(points[0]);
+		
+		for (int i = 0; i < points.length; i++) {
+			if(player.distance2D(points[i])<dis) {
+				index=i;
+				dis=player.distance2D(points[i]);
+			}
+			
+		}
+		return m2.PointPix2Gps(new Geom.Point3D(points[index].x(),points[index].y()));
 	}
 
 

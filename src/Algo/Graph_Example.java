@@ -14,6 +14,11 @@ import graph.Point3D;
  */
 public class Graph_Example {
 	public static void main(String[] a) {
+		for (int i = 0; i < 10; i++) {
+			paly();
+		}
+	}
+	public static void paly() {
 		int size = 16;
 		double[] xx = {38,88,88,356,356,60,60,310,310,120,164,277,422,277,422,238};
 		double[] yy = {131,50,102,50,102,218,254,254,218,275,275,125,125,192,192,191};
@@ -66,6 +71,7 @@ public class Graph_Example {
 		G.addEdge("11","b",pp[11].distance2D(pp[15]));
 		 
 		// This is the main call for computing all the shortest path from node 0 ("a")
+		//Graph_Algo.dijkstra(G, source);
 		Graph_Algo.dijkstra(G, source);
 		Node b = G.getNodeByName(target);
 		System.out.println("***** Graph Demo for OOP_Ex4 *****");
@@ -75,5 +81,6 @@ public class Graph_Example {
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
+		
 	}
 }

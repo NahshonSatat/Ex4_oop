@@ -2,6 +2,11 @@ package Geom;
 
 import java.util.ArrayList;
 
+/**
+ * this class represent a game whit packmans and fruits ghost box and player
+ * this is the main class that represent all the data that is the output from the paly class 
+ */
+
 
 public class Game {
 	private ArrayList<Player> Players;
@@ -18,6 +23,10 @@ public class Game {
 		Ghosts=new ArrayList<Ghost>();
 	}
 
+	
+	/**
+	 * update the game by the output from the play class 
+	 */
 	public void upDate(ArrayList<String> board_data) {
 		Packmans.clear();
 		Fruits.clear();
@@ -53,7 +62,9 @@ public class Game {
 
 	}
 
-
+	/**
+	 * clear the game
+	 */
 	public void clear() {
 		Packmans.clear();
 		Fruits.clear();

@@ -2,12 +2,22 @@ package Geom;
 
 import Geom.Point3D;
 
+/**
+ * this class reprisent a fruit
+ * with point and Weight
+ * @author אליהו סתת
+ *
+ */
+
 public class Fruit {
 	private double Weight;
 	private double id;
 	private Point3D point; 
 	
 	
+	/**
+	 * the class build from a line that given from play class
+	 */
 	public Fruit(String line) {
 		String[] arr=line.split(",");
 		// getting the lat lont alt for the point

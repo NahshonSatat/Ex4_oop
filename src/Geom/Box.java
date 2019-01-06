@@ -2,12 +2,19 @@ package Geom;
 
 import Geom.Point3D;
 
+/**
+ * this class represent a box of daed space in the game whit pacmans and fruits
+ */
 public class Box {
 	private double id;
 	private Point3D start;
 	private Point3D end;
 	private double Weight;
 	
+	
+	/**
+	 * the box build from a line that give the play class
+	 */
 	public Box(String line) 
 	{
 		String[] arr=line.split(",");
@@ -30,8 +37,8 @@ public class Box {
 	public Point3D getEnd() {
 		return end;
 	}
-		public String toString() {
+	public String toString() {
 			return id+","+start.x()+","+start.y()+","+start.z()+","+end.x()+","+end.y()+","+end.z()+","+Weight;
-		}
+	}
 	
 }
