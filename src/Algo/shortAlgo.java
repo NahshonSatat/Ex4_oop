@@ -25,22 +25,24 @@ import Geom.Pacmen;
  */
 
 public class shortAlgo {
-//	public static void main(String[] args) 
-//	{
-//		Line2D a2g = new Line2D.Double(678,202,829,507);
-//		Line2D a2g1 = new Line2D.Double(468.0,365.0,1176.0,365.0);
-//		Line2D a2g2 = new Line2D.Double(1176.0,296.0,468.0,296.0);
-//		System.out.println(a2g.intersectsLine(a2g1));
-//		System.out.println(a2g.intersectsLine(a2g2));
-//	}
+	//	public static void main(String[] args) 
+	//	{
+	//		Line2D a2g = new Line2D.Double(678,202,829,507);
+	//		Line2D a2g1 = new Line2D.Double(468.0,365.0,1176.0,365.0);
+	//		Line2D a2g2 = new Line2D.Double(1176.0,296.0,468.0,296.0);
+	//		System.out.println(a2g.intersectsLine(a2g1));
+	//		System.out.println(a2g.intersectsLine(a2g2));
+	//	}
 
 	private Game game;
 	private convert m2;
-    public int count=0;
-	
+	public int count=0;
+    static boolean a ;
+    
 	public shortAlgo(Game game) {
 		this.game=game;
 		m2=new convert(1433,642,35.202369,32.105728,35.212416,32.101898);
+		
 	}
 
 	public void update(Game game) {
@@ -70,7 +72,7 @@ public class shortAlgo {
 			p.add(temp4);
 
 		}
-		System.out.println(p);
+		//System.out.println(p);
 		Point3D[] pp = new Point3D[p.size()];
 		for (int i = 0; i < p.size(); i++) {
 			pp[i]=p.get(i);
@@ -114,7 +116,7 @@ public class shortAlgo {
 			Line2D line3 = new Line2D.Double(temp4.x(),temp4.y(),temp2.x(),temp2.y());
 			//System.out.println("line3:"+temp4.x()+","+temp4.y()+","+temp2.x()+","+temp2.y());
 			Line2D line4 = new Line2D.Double(temp4.x(),temp4.y(),temp3.x(),temp3.y());
-			
+
 			Line2D line5 = new Line2D.Double(temp1.x(),temp1.y(),temp4.x(),temp4.y());
 			//System.out.println("line3:"+temp4.x()+","+temp4.y()+","+temp2.x()+","+temp2.y());
 			Line2D line6 = new Line2D.Double(temp2.x(),temp2.y(),temp3.x(),temp3.y());
@@ -163,7 +165,7 @@ public class shortAlgo {
 		}
 		return ans;	
 	}
-	
+
 	/*
 	public void chack(Geom.Point3D a1,Geom.Point3D b1) {
 		Point3D a=new Point3D(a1.x(),a1.y());
@@ -180,8 +182,8 @@ public class shortAlgo {
            System.out.println(temp_Line2D.getX1()+","+temp_Line2D.getY1()+","+temp_Line2D.getX2()+","+temp_Line2D.getY2());
 		}
 	}
-*/
-	
+	 */
+
 	/*
 	public Graph buildGraph(Geom.Point3D a1,Geom.Point3D b1) {
 		Point3D[] points=box2arr();
@@ -248,7 +250,7 @@ public class shortAlgo {
 			}
 		}
 		//Graph_Algo ga1=new Graph_Algo();
-		
+
 		Graph_Algo.dijkstra(G, source);
 		Node g = G.getNodeByName(target);
 		System.out.println("***** Graph try for OOP_Ex4 *****");
@@ -256,9 +258,9 @@ public class shortAlgo {
 		System.out.println("Dist: "+g.getDist());
 		return G;
 	}
-	
-	*/
-	
+
+	 */
+
 	// this function get to points and give the best time to go from a1 to b1
 	// according to the given Graph
 	public double disTime(Geom.Point3D a1,Geom.Point3D b1) {
@@ -266,7 +268,7 @@ public class shortAlgo {
 
 		ArrayList<Line2D> lines=boxes2lines();
 		//syse(lines);
-		System.out.println(lines.size());
+		//System.out.println(lines.size());
 		Point3D a=new Point3D(a1.x(),a1.y());
 		Point3D b=new Point3D(b1.x(),b1.y());
 		Graph G = new Graph();
@@ -321,20 +323,53 @@ public class shortAlgo {
 				}
 			}
 		}
-		System.out.println("the "+count+"time");
+		//System.out.println("the "+count+"time");
 		count++;
-		Graph_Algo ga=new Graph_Algo();
-		ga.dijkstra(G, source);
+		Graph_Algo.dijkstra(G, source);
 		Node g = G.getNodeByName(target);
-		System.out.println("***** Graph try for OOP_Ex4 *****");
-		System.out.println(g);
-		System.out.println("Dist: "+g.getDist());
+		//System.out.println("***** Graph try for OOP_Ex4 *****");
+		//System.out.println(g);
+		//System.out.println("Dist: "+g.getDist());
 		return g.getDist();
 	}
-	
-	
+
+
 	// chack what is the nearst fruit to go in a given game - use the "disTime" fun 
 	public Geom.Point3D nearFrut() {
+		
+		double besttime=10000;
+		Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
+		Geom.Point3D temp_point;
+		Geom.Point3D start_point=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+		ArrayList<Fruit>f=game.getFruits();
+		if(f.size()<2) {
+			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			Fruit temp_Fruit=f.get(0);
+			return temp_Fruit.getPoint();			
+		}
+		Iterator<Fruit> it2 =f.iterator();
+		Fruit temp_Fruit ;
+		while(it2.hasNext()) {
+			temp_Fruit=(Fruit)it2.next();
+			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+			////
+			if(hasLine(new Point3D( start_point.x(),start_point.y()),new Point3D( temp_point.x(),temp_point.y()))) {
+				if(new Point3D( start_point.x(),start_point.y()).distance2D(new Point3D( temp_point.x(),temp_point.y()))<besttime) {
+					bestPoint=  temp_point;
+					besttime=new Point3D( start_point.x(),start_point.y()).distance2D(new Point3D( temp_point.x(),temp_point.y()));
+				}
+			}
+			///
+			else {
+				if(disTime(start_point,temp_point)<besttime) {
+					bestPoint=  temp_point;
+					besttime=disTime(start_point,temp_point);
+				}
+			}
+		}
+		return bestPoint;
+	}
+	public Geom.Point3D SenplenearFrut() {
 		double besttime=10000;
 		Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
 		Geom.Point3D temp_point;
@@ -345,46 +380,62 @@ public class shortAlgo {
 		while(it2.hasNext()) {
 			temp_Fruit=(Fruit)it2.next();
 			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
-           if(disTime(start_point,temp_point)<besttime) {
-        	   bestPoint=  temp_point;
-        	   besttime=disTime(start_point,temp_point);
-           }
+			////
+			//if(hasLine(new Point3D( start_point.x(),start_point.y()),new Point3D( temp_point.x(),temp_point.y()))) {
+				if(new Point3D( start_point.x(),start_point.y()).distance2D(new Point3D( temp_point.x(),temp_point.y()))<besttime) {
+					bestPoint=  temp_point;
+					besttime=new Point3D( start_point.x(),start_point.y()).distance2D(new Point3D( temp_point.x(),temp_point.y()));
+			
+			}
+
 		}
 		return bestPoint;
 	}
-	
-	public Geom.Point3D nearFrut1() {
-		Geom.Point3D bestPoint=m2.PointGps2Pix(game.getFruits().get(1).getPoint());
-		//Geom.Point3D bestPoint= new Geom.Point3D(0.0,0.0);
-//		Geom.Point3D temp_point;
-//		Geom.Point3D start_point=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
-//		ArrayList<Fruit>f=game.getFruits();
-//		Iterator<Fruit> it2 =f.iterator();
-//		Fruit temp_Fruit ;
-//		while(it2.hasNext()) {
-//			temp_Fruit=(Fruit)it2.next();
-//			temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
-//           if(disTime(start_point,temp_point)<besttime) {
-//        	   bestPoint=  temp_point;
-//        	   besttime=disTime(start_point,temp_point);
-//           }
-//		}
-		return bestPoint;
-	}
-	
-	
+
+
+
 	// this is the main function - calc the best fruit to go and give the rotate for this fruit.
 	public double rotet() {
+
+	/// this is bad part of the algorithm - not generic
+		if((game.getFruits().size()<2)&&game.getPackmans().size()!=2) {
+			
+			Geom.Point3D a1;
+			Geom.Point3D start=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+			if(start.x()>850) {
+				 a1=m2.PointPix2Gps(new Geom.Point3D(1012,434));
+			}
+			else {
+				 a1=m2.PointPix2Gps(new Geom.Point3D(873,590));	
+			}
+			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(a1)+270)%360);
+			return rot;
+
+		}
+		/// this is bad part of the algorithm - not generic
+		if((game.getFruits().size()<2)&&game.getPackmans().size()==2) {
+			
+			Geom.Point3D a1;
+			Geom.Point3D start=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+
+				 a1=m2.PointPix2Gps(new Geom.Point3D(0,0));
+
+			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(a1)+270)%360);
+			return rot;
+
+		}
+		
 		///////////////////////////////////////////////////////
-		//Geom.Point3D b1= nearFrut();
-		Geom.Point3D b1=m2.PointGps2Pix(game.getFruits().get(0).getPoint());
+		
+		//Geom.Point3D b1=m2.PointGps2Pix(game.getFruits().get(0).getPoint());
 		Geom.Point3D a1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
+		Geom.Point3D b1= nearFrut();
 		Point3D[] points=box2arr();
 
-		System.out.println(points.length);
+		//System.out.println(points.length);
 		ArrayList<Line2D> lines=boxes2lines();
 		//syse(lines);
-		System.out.println(lines.size());
+		//System.out.println(lines.size());
 		Point3D a=new Point3D(a1.x(),a1.y());
 		Point3D b=new Point3D(b1.x(),b1.y());
 		Graph G = new Graph();
@@ -393,7 +444,7 @@ public class shortAlgo {
 		G.add(new Node(source)); // Node "a" (0)
 		for(int i=0;i<points.length;i++) {
 			Node d = new Node(""+i);
-			System.out.println("the point"+i+": "+points[i]);
+			//System.out.println("the point"+i+": "+points[i]);
 
 			G.add(d);
 		}
@@ -402,16 +453,16 @@ public class shortAlgo {
 		String temp="";
 		String temp1="";
 		// addnig all the edge of a
-		System.out.println(a);
+		//System.out.println(a);
 		for (int i = 0; i < points.length; i++) {
 			if(hasLine(a,points[i])) {
 				temp=""+i;
-				System.out.println("adding edge a");
+			
 				G.addEdge("a",temp,a.distance2D(points[i]));
 			}
 		}
 		if(hasLine(a,b)) {
-			System.out.println("adding edge a-b");
+		
 			G.addEdge("a","b",a.distance2D(b));
 		}
 
@@ -419,8 +470,7 @@ public class shortAlgo {
 		for (int i = 0; i < points.length; i++) {
 			if(hasLine(b,points[i])) {
 				temp=""+i;
-				System.out.println("adding edge b");
-				System.out.println(points[i]);
+
 				G.addEdge("b",temp,b.distance2D(points[i]));
 			}
 		}
@@ -432,53 +482,59 @@ public class shortAlgo {
 				if((i!=j)&&(hasLine(points[i],points[j]))) {
 					temp=""+i;
 					temp1=""+j;
-					System.out.println("adding edge c"+i+","+j);
-					System.out.println(points[i]);
-					System.out.println(points[j]);
 					G.addEdge(temp,temp1,points[i].distance2D(points[j]));
 				}
 			}
 		}
 		Graph_Algo ga=new Graph_Algo();
-		  //ga.dijkstra(G, source);
-			Graph_Algo.dijkstra(G, source);
-			Node g = G.getNodeByName(target);
-			String s=g.toString();
-			System.out.println("the path"+g.getPath());
-			int index=0;
-			if(g.getPath().size()<2) {
-				double rot=360-((game.getPlayers().get(0).getPoint().north_angle(togo())+270)%360);
-				return rot;
-			}
-			else {
-			s=g.getPath().get(1);
-			 index=Integer.parseInt(s);
-			}
-			Geom.Point3D p1=m2.PointPix2Gps(new Geom.Point3D( points[index].x(),points[index].y()));
-			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
+		//ga.dijkstra(G, source);
+		Graph_Algo.dijkstra(G, source);
+		Node g = G.getNodeByName(target);
+		String s=g.toString();
+		//System.out.println("the path"+g.getPath());
+		int index=0;
+		if(hasLine(a,b)) {
+			double rot=360-((game.getPlayers().get(0).getPoint().north_angle(togo())+270)%360);
 			return rot;
-		
+		}
+		else {
+			s=g.getPath().get(1);
+			index=Integer.parseInt(s);
+		}
+		Geom.Point3D p1=m2.PointPix2Gps(new Geom.Point3D( points[index].x(),points[index].y()));
+		double rot=360-((game.getPlayers().get(0).getPoint().north_angle(p1)+270)%360);
+		return rot;
+
 	}
-	
-	
+
+
 	//if there is a fruit near to the packman without any box in the midle -> goto the nearst fruit
+	// this is a bug -go to the fruit not to the nearest point
 	public Geom.Point3D togo(){
-		Point3D[] points=box2arr();
+		ArrayList<Fruit>f=game.getFruits();
 		Geom.Point3D p1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
 		Point3D player=new Point3D(p1.x(),p1.y());
+		Geom.Point3D ans=f.get(0).getPoint();
 		int index=0;
-		double dis=player.distance2D(points[0]);
-		
-		for (int i = 0; i < points.length; i++) {
-			if(player.distance2D(points[i])<dis) {
-				index=i;
-				dis=player.distance2D(points[i]);
+		double dis=10000;
+		Iterator<Fruit> it2 =f.iterator();
+		Fruit temp_Fruit ;
+		while(it2.hasNext()) {
+			temp_Fruit=(Fruit)it2.next();
+			Geom.Point3D temp_point=m2.PointGps2Pix(temp_Fruit.getPoint());
+
+			Point3D target=new Point3D(temp_point.x(),temp_point.y());
+
+			if(player.distance2D(target)<dis) {
+				dis=player.distance2D(target);
+				ans=temp_point;
 			}
-			
+
 		}
-		return m2.PointPix2Gps(new Geom.Point3D(points[index].x(),points[index].y()));
+
+		return m2.PointPix2Gps(new Geom.Point3D(ans.x(),ans.y()));
 	}
 
 
-	
+
 }

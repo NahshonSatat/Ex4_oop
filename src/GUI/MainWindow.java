@@ -36,11 +36,9 @@ import Robot.Play;
  * this class is the gui class of this game
  * @author אליהו סתת
  *with the following application:
- *you can add packman - press left 
- *you can add fruit - press right
- *you can save as csv file - and load 
- *you can run the algorithm or play and see it
- *and you can export the path of the packmans to kml 
+ *you can loud game from the data
+ *you can play by hand 
+ *you can run the algorithm of the game
  */
 public class MainWindow extends JFrame implements MouseListener
 {
@@ -156,12 +154,12 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Point3D p1;
-				if(!game.getPackmans().isEmpty()) {
-				 p1=game.getPackmans().get(0).getPoint();
-				}
-				else {
+//				if(!game.getPackmans().isEmpty()) {
+//				 p1=game.getPackmans().get(0).getPoint();
+//				}
+//				else {
 					p1=game.getFruits().get(0).getPoint();
-				}
+				//}
 				if(init) {
 				play1.setInitLocation(p1.x(),p1.y());
 				init=false;
@@ -234,12 +232,12 @@ public class MainWindow extends JFrame implements MouseListener
 
 			}});
 
-		menu.add(item1);
+		//menu.add(item1);
 		menu.add(item2);
 		menu1.add(item3);
-		menu1.add(item4);
+		//menu1.add(item4);
 		menu1.add(item5);
-		menu1.add(item6);
+		//menu1.add(item6);
 		menuBar.add(menu);
 		menuBar.add(menu1);
 
@@ -423,17 +421,17 @@ public class MainWindow extends JFrame implements MouseListener
 			//while(!game.getFruits().isEmpty()) {
 				shortAlgo sa=new shortAlgo(game);
 				play1.rotate(sa.rotet());
-				
+				System.out.println(play1.getStatistics());
 				game.upDate(play1.getBoard());
 				repaint();
 				try {
-					Thread.sleep(100);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 
 			}
-			//System.out.println(play1.getStatistics());
+			System.out.println(play1.getStatistics());
 
 
 
