@@ -20,11 +20,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import Algo.shortAlgo;
+
 import Coords4.convert;
 import Geom.Box;
 import Geom.Fruit;
 import Geom.Game;
 import Geom.Ghost;
+import Geom.Map;
 import Geom.Pacmen;
 import Geom.Player;
 import Geom.Point3D;
@@ -68,9 +70,9 @@ public class MainWindow extends JFrame implements MouseListener
 		//gameP=new Game();
 		//file_name=s;
 		//play1 = new Play(file_name);
-
+        Map m=new Map("Ariel1.png");
 		//play1.setInitLocation(32.10486058280427,35.20937630059002);
-		game=new Game();
+		game=new Game(m);
 		//game.upDate(play1.getBoard());
 		//play1.start();
 		rot=0;
@@ -245,7 +247,8 @@ public class MainWindow extends JFrame implements MouseListener
 
 		try {
 			//myImage = ImageIO.read(new File(map.getPath()));
-			myImage = ImageIO.read(new File("Ariel1.png"));
+			//myImage = ImageIO.read(new File("Ariel1.png"));
+			myImage = ImageIO.read(new File(game.getMap().getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

@@ -14,7 +14,7 @@ public class Ghost {
 		private double speed;
 		private Point3D point;
 		private double time;
-		
+		// private image
 		
 		/**
 		 * the class build from a line that given from play class

@@ -9,7 +9,7 @@ public class Player {
 		private double speed;
 		private Point3D point;
 		private double time;
-		
+		// private image
 		
 		public Player(String line) {
 			String[] arr=line.split(",");

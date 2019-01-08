@@ -10,7 +10,7 @@ public class Box {
 	private Point3D start;
 	private Point3D end;
 	private double Weight;
-	
+	// private image
 	
 	/**
 	 * the box build from a line that give the play class

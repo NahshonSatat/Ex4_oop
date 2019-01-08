@@ -13,7 +13,7 @@ public class Fruit {
 	private double Weight;
 	private double id;
 	private Point3D point; 
-	
+	// private image
 	
 	/**
 	 * the class build from a line that given from play class

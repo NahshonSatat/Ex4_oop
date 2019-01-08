@@ -14,13 +14,14 @@ public class Game {
 	private ArrayList<Fruit> Fruits;
 	private ArrayList<Box> Boxes;
 	private ArrayList<Ghost> Ghosts;
-
-	public Game() {
+    private Map map ;
+	public Game(Map map) {
 		Packmans=new ArrayList<Pacmen>();
 		Fruits=new ArrayList<Fruit>();
 		Players=new ArrayList<Player>();
 		Boxes=new ArrayList<Box>();
 		Ghosts=new ArrayList<Ghost>();
+		this.map=map;
 	}
 
 	
@@ -71,6 +72,9 @@ public class Game {
 		Players.clear();
 		Boxes.clear();
 		Ghosts.clear();
+	}
+	public Map getMap() {
+		return this.map;
 	}
 	public ArrayList<Pacmen> getPackmans(){
 		return this.Packmans;
