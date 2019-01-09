@@ -19,10 +19,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+import com.mysql.fabric.Server;
+
 import Algo.shortAlgo;
 
 import Coords4.convert;
 import Geom.Box;
+import Geom.Database;
 import Geom.Fruit;
 import Geom.Game;
 import Geom.Ghost;
@@ -156,6 +159,7 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Point3D p1;
+				play1.setIDs(315823880, 204395644);
 //				if(!game.getPackmans().isEmpty()) {
 //				 p1=game.getPackmans().get(0).getPoint();
 //				}
@@ -183,9 +187,11 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				shortAlgo sa=new shortAlgo(game);
+				play1.setIDs(315823880, 204395644);
 				Point3D a1 = new Point3D(425,153);
 				Point3D c1 = new Point3D(450,538);
 				Point3D b1 = new Point3D(1094,509);
+				
 				//sa.chack(a1, c1);
 				
 				
@@ -199,6 +205,7 @@ public class MainWindow extends JFrame implements MouseListener
 			public void actionPerformed(ActionEvent arg0) {
 
 				//play1.setInitLocation(32.10486058280427,35.20937630059002);
+				play1.setIDs(315823880, 204395644);
 				Point3D p1=m1.PointPix2Gps(new Point3D(x,y,0));
 				if(init) {
 				play1.setInitLocation(p1.x(),p1.y());
@@ -219,6 +226,7 @@ public class MainWindow extends JFrame implements MouseListener
 			public void actionPerformed(ActionEvent arg0) {
 				shortAlgo sa=new shortAlgo(game);
 				Point3D t=new Point3D(32.10386468847352,35.20379330704815,0.0);
+				play1.setIDs(315823880, 204395644);
 				Point3D temp_point1=m2.PointGps2Pix(game.getPlayers().get(0).getPoint());
 				Point3D temp_point2=m2.PointGps2Pix(t);
 				Point3D temp1 = new Point3D(678,202);
@@ -231,6 +239,7 @@ public class MainWindow extends JFrame implements MouseListener
 //				sa.box2arr();
 //				System.out.println("the num of lines:");
 //				sa.boxes2lines();
+				play1.setIDs(315823880, 204395644);
 
 			}});
 
@@ -435,10 +444,17 @@ public class MainWindow extends JFrame implements MouseListener
 
 			}
 			System.out.println(play1.getStatistics());
-
-
+			play1.setIDs(315823880, 204395644);
+                  System.out.println(play1.getHash1());
+                 String[]name=play1.getStatistics().split(","); 
+			Database a=new Database();
+		double averge=	a.main(play1.getHash1());
+			System.out.println("my shit :" + name[2].substring(6)+ " averge time : "+averge);
+			
+		
 
 		}
+		
 
 	}
 

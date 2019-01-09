@@ -27,7 +27,8 @@ public class Main {
 	//long l=1000;
 	//int x=1;
 	//System.out.println(TimeNow());
-    //System.out.println(pointTime(x));
+    //System.out.println(pointTime(x))
+		
 	}
 
 }
