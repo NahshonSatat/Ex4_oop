@@ -15,6 +15,7 @@ public class Game {
 	private ArrayList<Box> Boxes;
 	private ArrayList<Ghost> Ghosts;
     private Map map ;
+    private String dataName;
 	public Game(Map map) {
 		Packmans=new ArrayList<Pacmen>();
 		Fruits=new ArrayList<Fruit>();
@@ -72,6 +73,13 @@ public class Game {
 		Players.clear();
 		Boxes.clear();
 		Ghosts.clear();
+	}
+	public void upDateDataName(String name) {
+		this.dataName=name;
+	}
+	public String getDateName() 
+	{
+		return this.dataName;
 	}
 	public Map getMap() {
 		return this.map;

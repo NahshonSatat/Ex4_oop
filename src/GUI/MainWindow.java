@@ -137,10 +137,10 @@ public class MainWindow extends JFrame implements MouseListener
 					}
 					else {
 						System.out.println("Opening: " + file.getAbsolutePath());
-
+                          game.upDateDataName(file.getAbsolutePath());
 						try {
 							play1 = new Play(file.getAbsolutePath());
-	
+							System.out.println(play1.getHash1());
 							game.upDate(play1.getBoard());
 
 						} catch (Exception e) {
@@ -437,19 +437,18 @@ public class MainWindow extends JFrame implements MouseListener
 				game.upDate(play1.getBoard());
 				repaint();
 				try {
-					Thread.sleep(10);
+					Thread.sleep(3);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 
 			}
 			System.out.println(play1.getStatistics());
-			play1.setIDs(315823880, 204395644);
                   System.out.println(play1.getHash1());
                  String[]name=play1.getStatistics().split(","); 
 			Database a=new Database();
 		double averge=	a.main(play1.getHash1());
-			System.out.println("my shit :" + name[2].substring(6)+ " averge time : "+averge);
+			System.out.println("my score :" + name[2].substring(6)+ " averge score  : "+averge);
 			
 		
 
