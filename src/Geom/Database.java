@@ -9,6 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * this class represent the connect with the data base
+ * she knew to calculate our score and the average score for every game
+ */
 public class Database {
 	public  double main(int idmap)
 	{
