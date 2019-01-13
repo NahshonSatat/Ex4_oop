@@ -437,7 +437,7 @@ public class MainWindow extends JFrame implements MouseListener
 				game.upDate(play1.getBoard());
 				repaint();
 				try {
-					Thread.sleep(3);
+					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

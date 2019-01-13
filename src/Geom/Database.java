@@ -30,20 +30,11 @@ public class Database {
 			Statement statement = connection.createStatement();
 
 			//select data
-			String allCustomersQuery = "SELECT * FROM logs;";
+			String allCustomersQuery = "SELECT AVG(Point) FROM logs where SomeDouble=" + idmap;
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-			double sum=0;
-			int size=0;
-			while(resultSet.next())
-			{
-				if (resultSet.getInt("SomeDouble")==idmap) {
-
-					sum += Double.parseDouble(""+resultSet.getDouble("Point"));
-
-					size++;
-				}
-			}
-			averega =sum / size;
+			resultSet.next();
+		
+			averega =resultSet.getDouble(1);
 
 				resultSet.close();		
 				statement.close();		
